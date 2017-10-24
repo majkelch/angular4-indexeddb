@@ -78,6 +78,7 @@ export class DBComponent implements OnInit {
 
     dismiss() {
         this.message = null
+        console.log('here');
     }
 
     populateDb() {

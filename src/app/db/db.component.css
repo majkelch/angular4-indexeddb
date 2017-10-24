@@ -1,0 +1,13 @@
+ul {
+    width: 50%;
+}
+li span:nth-of-type(2n) {
+    color: red;
+}
+li span:nth-of-type(2n):hover {
+    cursor: pointer;
+}
+
+.dismiss-message strong:hover {
+    cursor: pointer;
+}

@@ -1,1 +1,1 @@
-# angular4-indexeddb
+Implementation of indexedDB plugin for Angular.

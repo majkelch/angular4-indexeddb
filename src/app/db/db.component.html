@@ -1,0 +1,117 @@
+<div class="row pb-5">
+
+    <div class="col-md-12">
+        <button class="btn btn-primary" (click)="populateDb()">Populate DB</button>
+        <button class="btn btn-primary" (click)="clearDb()">Clear DB</button>
+    </div>
+
+</div>
+
+<div class="row" *ngIf="message">
+
+    <div class="col-md-6">
+        <div class="alert {{message.type}} alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <span style="display: inline-block; max-width: 85%">{{message.text}}</span>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+
+    <div class="col-md-6">
+        <div>
+            Sort by:
+            <a href="#" (click)="sortBy('id', 'asc')">id asc</a> |
+            <a href="#" (click)="sortBy('id', 'desc')">id desc</a> |
+            <a href="#" (click)="sortBy('name', 'asc')">name asc</a> |
+            <a href="#" (click)="sortBy('name', 'desc')">name desc</a> |
+            <a href="#" (click)="sortBy('age', 'asc')">age asc</a> |
+            <a href="#" (click)="sortBy('age', 'desc')">age desc</a>
+        </div>
+
+        <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Id
+                            <span *ngIf="sorter.prop === 'id' && sorter.direction === 'asc'">&#8593;</span>
+                            <span *ngIf="sorter.prop === 'id' && sorter.direction === 'desc'">&#8595;</span>
+                        </th>
+                        <th>
+                            Name
+                            <span *ngIf="sorter.prop === 'name' && sorter.direction === 'asc'">&#8593;</span>
+                            <span *ngIf="sorter.prop === 'name' && sorter.direction === 'desc'">&#8595;</span>
+                        </th>
+                        <th>
+                            Age
+                            <span *ngIf="sorter.prop === 'age' && sorter.direction === 'asc'">&#8593;</span>
+                            <span *ngIf="sorter.prop === 'age' && sorter.direction === 'desc'">&#8595;</span>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of elements">
+                        <td>{{item.id}}</td>
+                        <td>{{item.name}}</td>
+                        <td>{{item.age}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary"
+                                (click)="edit(item)">Edit</button>
+                            <button class="btn btn-sm btn-danger"
+                                (click)="remove(item)">Remove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+
+    <div class="col-md-4">
+        <form #formComponent="ngForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label>Id</label>
+                <input class="form-control" type="number" name="id" disabled
+                    [(ngModel)]="model.id" #id="ngModel" />
+            </div>
+            <div class="form-group" style="min-height: 100px;">
+                <label>
+                    Name
+                    <span *ngIf="name.invalid && (name.dirty || name.touched) || (name.pristine && name.untouched)" class="text-danger">*</span>
+                    <span *ngIf="name.valid && (name.dirty || name.touched)" class="text-success">&#10004;</span>
+                </label>
+                <input class="form-control" type="text" name="name" required minlength="2"
+                        [(ngModel)]="model.name" #name="ngModel" />
+
+
+                        <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger p-1 pl-2 small">
+                          <div *ngIf="name.errors.required">Name is required.</div>
+                          <div *ngIf="name.errors.minlength">Name must be at least 2 characters long.</div>
+                        </div>
+            </div>
+
+            <div class="form-group" style="min-height: 100px;">
+                <label>
+                    Age
+                    <span *ngIf="age.invalid && (age.dirty || age.touched) || (age.pristine && age.untouched) || model.age === 0" class="text-danger">*</span>
+                    <span *ngIf="age.valid && (age.dirty || age.touched) && model.age > 0" class="text-success">&#10004;</span>
+                </label>
+                <input class="form-control" type="number" name="age" required min="1"
+                    [(ngModel)]="model.age"  #age="ngModel" />
+
+                    <div *ngIf="age.invalid && (age.dirty || age.touched)" class="alert alert-danger p-1 pl-2 small">
+                      <div *ngIf="age.errors.required">Age is required.</div>
+                    </div>
+                    <div *ngIf="model.age === 0" class="alert alert-danger p-1 pl-2 small">Age must be at least 1.</div>
+            </div>
+
+            <button class="btn btn-primary" type="submit"
+                    [disabled]="!formComponent.valid || model.age === 0">Save</button>
+
+        </form>
+    </div>
+
+</div>

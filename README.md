@@ -1,1 +1,1 @@
-Implementation of indexedDB plugin for Angular.
+Implementation of indexedDB https://github.com/gilf/angular2-indexeddb plugin for Angular.
